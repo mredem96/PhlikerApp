@@ -92,6 +92,9 @@ public class PhotoController {
         if (search_tag.equals("")){
             return;
         }
+        
+        // for multiple word combine to One
+        search_tag = search_tag.replaceAll(" ", "_");
 
         // page is opened page number it initialise every search result to 0
         page = 0;
