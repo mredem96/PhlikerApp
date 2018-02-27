@@ -96,12 +96,7 @@ public class PhotoController {
         // for multiple word combine to One
         search_tag = search_tag.replaceAll(" ", "_");
 
-        // page is opened page number it initialise every search result to 0
-        page = 0;
-        if(photos.getPhotos() != null) {
-            photos.getPhotos().clear(); // if photos results not null clear it for other results
-            System.out.println("it's cleared. size : " + photos.getPhotos().size());
-        }
+   
 
         JSONObject jsobj = null;
         try {
@@ -111,7 +106,21 @@ public class PhotoController {
             title.setText("Unable to connect to the Server ....");
         }
 
-        //System.out.println(jsobj.toString());
+        // for not returning enough json data to display
+        
+       JSONArray jsonArray = jsobj.getJSONObject("photos").getJSONArray("photo");
+
+        if(jsonArray.length() < 19){ // if it's not enough stop actions
+            title.setText(" There no enough matching results .... ");
+            return;
+        }
+        
+        // page is opened page number it initialise every search result to 0
+        page = 0;
+        if(photos.getPhotos() != null) {
+            photos.getPhotos().clear(); // if photos results not null clear it for other results
+            System.out.println("it's cleared. size : " + photos.getPhotos().size());
+        }
 
 
         jsonModelParser(jsobj);
